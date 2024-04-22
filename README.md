@@ -2,7 +2,7 @@
 
 This repository contains a series of notebooks based on Philip Candelas' introductory course on Mathematica: "Symbolic, Numerical and Graphical Scientific computing". This course was available as part of a few Masters' programmes in the Mathematical Institute, University of Oxford.
 
-The notebooks are based on the 2019 version of the course and I provide my own solutions to the homework assessments. Note that the 4th problem sheet was a purely graphical task. (The task is explained within my solution.)
+The notebooks are based on the 2019 version of the course and I provide my own solutions to the homework assessments. Problem Sheets 1 to 3 contain various exercises and research problems from the late 90's in the area of Calabi-Yau manifolds. While the reader might not be interested in the topic, these problems provide great use-cases for the analytical power of Mathemaitca. The 4th problem sheet is a purely graphical task, being explained within my solution.
 
 
 <p align="center">
