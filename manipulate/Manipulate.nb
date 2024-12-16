@@ -1,0 +1,574 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     21610,        566]
+NotebookOptionsPosition[     19162,        517]
+NotebookOutlinePosition[     19706,        536]
+CellTagsIndexPosition[     19663,        533]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Using the Manipulate[] function", "Chapter",
+ CellChangeTimes->{{3.724943992364118*^9, 3.724944007146431*^9}, 
+   3.725524593957123*^9, {3.8347414382869263`*^9, 3.8347414418397903`*^9}, {
+   3.894543071231037*^9, 
+   3.89454307647964*^9}},ExpressionUUID->"d90cc9ee-2f1b-4f3e-b72d-\
+3d49e4e77ba1"],
+
+Cell[TextData[{
+ "Our interest is in a family of \[OpenCurlyQuote]elliptic curves\
+\[CloseCurlyQuote], described by the cubic:\n\n\t\t\t",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["y", "2"], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"4", 
+      SuperscriptBox["x", "3"]}], "-", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["g", "2"], "[", 
+       RowBox[{"U", ",", " ", "\[Lambda]"}], "]"}], " ", "x"}], " ", "-", " ", 
+     RowBox[{
+      SubscriptBox["g", "3"], "[", 
+      RowBox[{"U", ",", " ", "\[Lambda]"}], "]"}], " "}]}], TraditionalForm]],
+  ExpressionUUID->"85b216fc-eeb2-4139-88e2-2a00482a794e"],
+ "\n\n- For any fixed value of the parameters U and \[Lambda], this defines \
+an elliptic curve (i.e. a TORUS) with coordinates x, y. \n-  We define a \
+quantity called the \[OpenCurlyQuote]discriminant\[CloseCurlyQuote] of the \
+curve ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[CapitalDelta]", "[", "U", "]"}], "=", 
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{
+       SubscriptBox["g", "2"], "[", "U", "]"}], "3"], " ", "-", " ", 
+     RowBox[{"27", 
+      SuperscriptBox[
+       RowBox[{
+        SubscriptBox["g", "3"], "[", "U", "]"}], "2"]}]}]}], 
+   TraditionalForm]],ExpressionUUID->"bf680dc8-8896-4179-8b38-1803a8737f6d"],
+ ", and we are interested in the zeros of this function as we vary \[Lambda].\
+\n- For this simple example, we can solve this analytically. However, this is \
+not always the case. \n\nMathematica comes to the rescue with the \
+Manipulate[] function, which helps us visualize these singularities!"
+}], "Text",
+ CellChangeTimes->{{3.894543172410483*^9, 3.8945433188562903`*^9}, {
+  3.8945433534861*^9, 3.894543488381065*^9}, {3.894543806529336*^9, 
+  3.8945438096700993`*^9}},ExpressionUUID->"caab04c8-b9ab-47bb-b0b4-\
+121132c37318"],
+
+Cell[CellGroupData[{
+
+Cell["Defining function of interest", "Subsubsection",
+ CellChangeTimes->{{3.816598880860916*^9, 3.816598882385311*^9}, {
+  3.894543092304268*^9, 
+  3.894543098258052*^9}},ExpressionUUID->"85b4dada-417d-41f6-8a62-\
+345d32241e9f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", ";", " ", 
+   RowBox[{"Clear", "[", 
+    RowBox[{
+    "g2", ",", "g3", ",", "U", ",", "\[Lambda]", ",", "\[CapitalDelta]", ",", 
+     "J", ",", "L"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"g2", "[", "U_", "]"}], ":=", 
+   RowBox[{
+    FractionBox["4", "3"], 
+    RowBox[{"(", 
+     RowBox[{"1", "+", 
+      SuperscriptBox["U", "4"], "-", "\[Lambda]", "+", 
+      SuperscriptBox["\[Lambda]", "2"], "-", 
+      RowBox[{"2", " ", 
+       SuperscriptBox["U", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", "\[Lambda]"}], ")"}]}]}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"g3", "[", "U_", "]"}], ":=", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"-", "4"}], "27"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "2"}], "+", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["U", "6"]}], "+", 
+       RowBox[{"3", " ", "\[Lambda]"}], "+", 
+       RowBox[{"3", " ", 
+        SuperscriptBox["\[Lambda]", "2"]}], "-", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["\[Lambda]", "3"]}], "-", 
+       RowBox[{"6", " ", 
+        SuperscriptBox["U", "4"], " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", "\[Lambda]"}], ")"}]}], "+", 
+       RowBox[{"3", " ", 
+        SuperscriptBox["U", "2"], " ", 
+        RowBox[{"(", 
+         RowBox[{"2", "+", "\[Lambda]", "+", 
+          RowBox[{"2", " ", 
+           SuperscriptBox["\[Lambda]", "2"]}]}], ")"}]}]}], ")"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[CapitalDelta]", "[", "U_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"g2", "[", "U", "]"}], "3"], "-", 
+    RowBox[{"27", 
+     SuperscriptBox[
+      RowBox[{"g3", "[", "U", "]"}], "2"]}]}], "//", 
+   "Simplify"}]}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.800937899173479*^9, 3.8009379118141193`*^9}, {
+   3.800937972364213*^9, 3.8009380981074505`*^9}, 3.8012211932693977`*^9, {
+   3.8121945794462805`*^9, 3.8121946054863973`*^9}, {3.82082132693202*^9, 
+   3.820821358628681*^9}, 3.8292817162864184`*^9, {3.8297980323505974`*^9, 
+   3.8297980330715237`*^9}, {3.830673494851944*^9, 3.8306734999074903`*^9}, {
+   3.894543114796053*^9, 3.894543120683378*^9}, {3.894543151726139*^9, 
+   3.894543157981073*^9}, {3.8945438035545855`*^9, 3.894543812346219*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"103d324e-a912-45a5-8c72-6bcf06cd56b0"],
+
+Cell["Let us see how the discriminant looks like:", "Text",
+ CellChangeTimes->{{3.894543528743348*^9, 
+  3.8945435417007275`*^9}},ExpressionUUID->"cf921d32-2c2c-441a-803c-\
+67e180a1cb6c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[CapitalDelta]", "[", "U", "]"}], "//", "FullSimplify"}]], "Input",
+ CellChangeTimes->{{3.8945435089512043`*^9, 3.89454351363268*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"bcabb344-f5cc-4626-9725-eea592e3e651"],
+
+Cell[BoxData[
+ RowBox[{"16", " ", 
+  SuperscriptBox["\[Lambda]", "2"], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    SuperscriptBox["U", "4"], "+", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "\[Lambda]"}], ")"}], "2"], "-", 
+    RowBox[{"2", " ", 
+     SuperscriptBox["U", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "\[Lambda]"}], ")"}]}]}], ")"}]}]], "Output",
+ CellChangeTimes->{{3.8945435117749796`*^9, 3.894543513965395*^9}},
+ CellLabel->"Out[12]=",ExpressionUUID->"e8620dfb-2ac5-450c-9d3e-bfd3ca1396c2"]
+}, Open  ]],
+
+Cell["\<\
+As mentioned earlier, the roots of this function can be found analytically in \
+this case:\
+\>", "Text",
+ CellChangeTimes->{{3.894543528743348*^9, 
+  3.8945435600848966`*^9}},ExpressionUUID->"879232d6-6a9e-4b05-a125-\
+327defee16a1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Solve", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[CapitalDelta]", "[", "U", "]"}], "\[Equal]", "0"}], ",", "U"}],
+   "]"}]], "Input",
+ CellChangeTimes->{{3.8740586211503625`*^9, 3.874058623669177*^9}, 
+   3.8945431220488634`*^9},
+ CellLabel->"In[10]:=",ExpressionUUID->"a2655a96-afb9-4ec1-9a0a-7ad503fd0e3d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"U", "\[Rule]", 
+     RowBox[{
+      RowBox[{"-", "1"}], "-", 
+      SqrtBox["\[Lambda]"]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"U", "\[Rule]", 
+     RowBox[{"1", "-", 
+      SqrtBox["\[Lambda]"]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"U", "\[Rule]", 
+     RowBox[{
+      RowBox[{"-", "1"}], "+", 
+      SqrtBox["\[Lambda]"]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"U", "\[Rule]", 
+     RowBox[{"1", "+", 
+      SqrtBox["\[Lambda]"]}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.874058623889247*^9, 3.89454350444971*^9},
+ CellLabel->"Out[10]=",ExpressionUUID->"aabde911-2d2c-4ce0-b03d-6f364ef11171"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Manipulate[]", "Subsubsection",
+ CellChangeTimes->{{3.816598880860916*^9, 3.816598882385311*^9}, {
+  3.894543092304268*^9, 3.894543098258052*^9}, {3.8945434965239277`*^9, 
+  3.8945434987888365`*^9}},ExpressionUUID->"dffdb9eb-1ed4-46b4-8ef0-\
+e09989eececb"],
+
+Cell[TextData[{
+ "Here we want to visualize these roots, for varying values of \[Lambda], \
+which is a complex number. We parametrize this by:\n\n\t\t\t\t\t\t",
+ Cell[BoxData[
+  RowBox[{"\[Lambda]", " ", "=", " ", 
+   RowBox[{
+    SubscriptBox["\[Lambda]", "0"], " ", 
+    SuperscriptBox["E", 
+     RowBox[{"\[ImaginaryI]\[Pi]", " ", 
+      FractionBox[
+       SubscriptBox["t", "0"], "12"]}]]}]}]],
+  CellChangeTimes->{{3.822740140700584*^9, 3.8227401572638726`*^9}, 
+    3.8236103289146643`*^9, {3.894543594180722*^9, 3.894543596249778*^9}},
+  ExpressionUUID->"6a915c1d-2ce0-4c0d-8aeb-58511046b6d0"],
+ "\n\t\t\t\t\t\t\nwhere ",
+ Cell[BoxData[
+  SubscriptBox["\[Lambda]", "0"]],
+  CellChangeTimes->{{3.822740140700584*^9, 3.8227401572638726`*^9}, 
+    3.8236103289146643`*^9, {3.894543594180722*^9, 3.894543596249778*^9}},
+  ExpressionUUID->"b802f0fc-ca59-4bde-b87c-f40fb11cdf87"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["t", "0"], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "02692d67-336a-43a5-b194-6ada49a16b07"],
+ " are now real valued. Let us first define a function of both U and \
+\[Lambda]:"
+}], "Text",
+ CellChangeTimes->{{3.894543528743348*^9, 3.8945436619865313`*^9}, {
+  3.894543693145069*^9, 
+  3.8945437057063193`*^9}},ExpressionUUID->"bd58036a-ce77-49b7-bb97-\
+e6c60880795d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[CapitalDelta]n", "[", 
+   RowBox[{"U_", ",", "\[Lambda]_"}], "]"}], ":=", 
+  RowBox[{"16", " ", 
+   SuperscriptBox["\[Lambda]", "2"], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["U", "4"], "+", 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "1"}], "+", "\[Lambda]"}], ")"}], "2"], "-", 
+     RowBox[{"2", " ", 
+      SuperscriptBox["U", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{"1", "+", "\[Lambda]"}], ")"}]}]}], ")"}]}]}]], "Input",
+ CellChangeTimes->{{3.894543681934303*^9, 3.8945436916322737`*^9}, {
+  3.89454372289108*^9, 3.894543727214235*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"f31c28d6-093c-4b89-834c-61fcb7c1d167"],
+
+Cell["Then we use the Manipulate function:", "Text",
+ CellChangeTimes->{{3.8945437102370825`*^9, 
+  3.8945437198159323`*^9}},ExpressionUUID->"232d321c-c2c6-4375-8d89-\
+c312f99d49f0"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", "\t", 
+  RowBox[{
+   RowBox[{"ListPlot", "[", "\[IndentingNewLine]", "\t", 
+    RowBox[{
+     RowBox[{"ComplexExpand", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Re", "[", "U", "]"}], ",", 
+         RowBox[{"Im", "[", "U", "]"}]}], "}"}], "/.", "\[IndentingNewLine]", 
+       "\t\t\t\t", 
+       RowBox[{"Solve", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"\[CapitalDelta]n", "[", 
+           RowBox[{"U", ",", 
+            RowBox[{"\[Lambda]0", " ", 
+             SuperscriptBox["E", 
+              RowBox[{"I", " ", "Pi", "  ", 
+               FractionBox["t0", "12"]}]]}]}], "]"}], "\[Equal]", "0"}], ",", 
+         "U"}], "]"}]}], "\[IndentingNewLine]", "\t\t\t\t", "]"}], ",", 
+     "\[IndentingNewLine]", "\t\t", 
+     RowBox[{"AxesOrigin", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], ",", "\[IndentingNewLine]", "\t\t", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "6"}], ",", "6"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "5"}], ",", "5"}], "}"}]}], "}"}]}], ",", 
+     "\[IndentingNewLine]", "\t\t", 
+     RowBox[{"ImagePadding", "\[Rule]", "40"}], ",", "\[IndentingNewLine]", 
+     "\t\t", 
+     RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", "\[IndentingNewLine]", 
+     "\t\t", 
+     RowBox[{"Frame", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", "\t\t", 
+     RowBox[{"FrameLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"Im", ",", "None"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"Re", ",", "\"\<complex plane\>\""}], "}"}]}], "}"}]}], ",", 
+     "\[IndentingNewLine]", "\t\t", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"Directive", "[", 
+       RowBox[{"Red", ",", 
+        RowBox[{"PointSize", "[", ".02", "]"}]}], "]"}]}]}], 
+    "\[IndentingNewLine]", "\t\t", "]"}], ",", "\[IndentingNewLine]", "\t", 
+   RowBox[{"{", 
+    RowBox[{"\[Lambda]0", ",", "0.1", ",", "10"}], "}"}], ",", 
+   "\[IndentingNewLine]", "\t", 
+   RowBox[{"{", 
+    RowBox[{"t0", ",", "0", ",", "24"}], "}"}], ",", "\[IndentingNewLine]", 
+   "\t", 
+   RowBox[{"Dynamic", "[", "\[Lambda]", "]"}]}], "\[IndentingNewLine]", "\t", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.822740140700584*^9, 3.8227401572638726`*^9}, 
+   3.8236103289146643`*^9, {3.894543594180722*^9, 3.894543596249778*^9}, 
+   3.8945436688414264`*^9, 3.8945437290640955`*^9},
+ CellLabel->"In[2]:=",ExpressionUUID->"76acaecd-4a52-4194-be7c-63683e745eb3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Other uses of Manipulate[]", "Subsubsection",
+ CellChangeTimes->{{3.816598880860916*^9, 3.816598882385311*^9}, {
+  3.894543092304268*^9, 3.894543098258052*^9}, {3.8945434965239277`*^9, 
+  3.8945434987888365`*^9}, {3.8945438583464303`*^9, 
+  3.894543862019495*^9}},ExpressionUUID->"94a57c12-bbde-434e-994f-\
+e799a5c34f0e"],
+
+Cell[TextData[{
+ "There are many uses of Manipulate[] that can come handy, even in current \
+research problems!\n\nHere\[CloseCurlyQuote]s another example from the \
+wolfram Documentation for the electrostatic potential for two point charges, \
+where we can vary the strength of the two charges ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["q", "1"], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "c97b9222-b228-4e09-8ca5-4d5370b27db7"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["q", "2"], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "1f93b50b-441b-4cd9-9e8f-3d16230271ae"],
+ ". \n\nHere, p is a vector encoding the positions of the two charges. The \
+Locator represents an object at {x, y} in the graphic. Setting \
+\[OpenCurlyQuote]Deployed->True\[CloseCurlyQuote] we allow for an interactive \
+environment, where the positions of the charges can be moved around."
+}], "Text",
+ CellChangeTimes->{{3.8945438657718954`*^9, 3.894543883730053*^9}, {
+  3.8945440637102594`*^9, 3.8945441533407116`*^9}, {3.89454433984982*^9, 
+  3.894544341502263*^9}, {3.894544377965454*^9, 
+  3.8945444651928277`*^9}},ExpressionUUID->"ba937138-4293-487f-86b7-\
+24036ca61859"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ContourPlot", "[", 
+    RowBox[{
+     RowBox[{
+      FractionBox["q1", 
+       RowBox[{"Norm", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"x", ",", "y"}], "}"}], "-", 
+         RowBox[{"p", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], "]"}]], "+", 
+      FractionBox["q2", 
+       RowBox[{"Norm", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"x", ",", "y"}], "}"}], "-", 
+         RowBox[{"p", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "]"}]]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"y", ",", 
+       RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+     RowBox[{"Contours", "->", "10"}]}], "]"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"q1", ",", 
+       RowBox[{"-", "1"}]}], "}"}], ",", 
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"q2", ",", "1"}], "}"}], ",", 
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"p", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", 
+       RowBox[{"-", "1"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}], ",", "Locator"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Deployed", "->", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8945439542264585`*^9, 3.8945439630736623`*^9}, {
+  3.8945441157019386`*^9, 3.894544128634523*^9}, {3.8945441589360476`*^9, 
+  3.894544171874322*^9}},
+ CellLabel->"In[18]:=",ExpressionUUID->"17909f7c-1f7f-4d31-8fad-9995088901ca"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`p$$ = {{0.9279999999999999, 
+    0.855}, {-0.734, -0.48}}, $CellContext`q1$$ = 
+    0.9300000000000068, $CellContext`q2$$ = 0.3999999999999946, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`q1$$], -1}, -3, 3}, {{
+       Hold[$CellContext`q2$$], 1}, -3, 3}, {{
+       Hold[$CellContext`p$$], {{-1, 0}, {1, 0}}}, {-1, -1}, {1, 1}}}, 
+    Typeset`size$$ = {306., {151., 154.804931640625}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`p$$ = {{-1, 0}, {1, 
+         0}}, $CellContext`q1$$ = -1, $CellContext`q2$$ = 1}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      ContourPlot[$CellContext`q1$$/
+         Norm[{$CellContext`x, $CellContext`y} - 
+          Part[$CellContext`p$$, 1]] + $CellContext`q2$$/
+         Norm[{$CellContext`x, $CellContext`y} - 
+          Part[$CellContext`p$$, 2]], {$CellContext`x, -2, 
+         2}, {$CellContext`y, -2, 2}, Contours -> 10], 
+      "Specifications" :> {{{$CellContext`q1$$, -1}, -3, 
+         3}, {{$CellContext`q2$$, 1}, -3, 
+         3}, {{$CellContext`p$$, {{-1, 0}, {1, 0}}}, {-1, -1}, {1, 1}, 
+         ControlType -> Locator}}, "Options" :> {Deployed -> True}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{352., {201.06392818060704`, 205.93607181939296`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.8945441868888702`*^9, 3.894544192588376*^9}, {
+  3.894544723329265*^9, 3.894544724332486*^9}},
+ CellLabel->"Out[18]=",ExpressionUUID->"c60d3cff-6fcd-45ed-916e-fa7ae4f8b62e"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{949., 502.5},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+TaggingRules->{"TryRealOnly" -> False},
+Magnification:>0.85 Inherited,
+FrontEndVersion->"13.2 for Microsoft Windows (64-bit) (January 30, 2023)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"9f276aee-3c85-4a5d-a7b0-3750c810a210"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 302, 5, 58, "Chapter",ExpressionUUID->"d90cc9ee-2f1b-4f3e-b72d-3d49e4e77ba1"],
+Cell[885, 29, 1808, 43, 185, "Text",ExpressionUUID->"caab04c8-b9ab-47bb-b0b4-121132c37318"],
+Cell[CellGroupData[{
+Cell[2718, 76, 229, 4, 27, "Subsubsection",ExpressionUUID->"85b4dada-417d-41f6-8a62-345d32241e9f"],
+Cell[2950, 82, 2510, 67, 164, "Input",ExpressionUUID->"103d324e-a912-45a5-8c72-6bcf06cd56b0"],
+Cell[5463, 151, 187, 3, 28, "Text",ExpressionUUID->"cf921d32-2c2c-441a-803c-67e180a1cb6c"],
+Cell[CellGroupData[{
+Cell[5675, 158, 249, 4, 34, "Input",ExpressionUUID->"bcabb344-f5cc-4626-9725-eea592e3e651"],
+Cell[5927, 164, 556, 15, 36, "Output",ExpressionUUID->"e8620dfb-2ac5-450c-9d3e-bfd3ca1396c2"]
+}, Open  ]],
+Cell[6498, 182, 242, 6, 28, "Text",ExpressionUUID->"879232d6-6a9e-4b05-a125-327defee16a1"],
+Cell[CellGroupData[{
+Cell[6765, 192, 334, 8, 33, "Input",ExpressionUUID->"a2655a96-afb9-4ec1-9a0a-7ad503fd0e3d"],
+Cell[7102, 202, 699, 22, 37, "Output",ExpressionUUID->"aabde911-2d2c-4ce0-b03d-6f364ef11171"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[7850, 230, 262, 4, 27, "Subsubsection",ExpressionUUID->"dffdb9eb-1ed4-46b4-8ef0-e09989eececb"],
+Cell[8115, 236, 1328, 32, 112, "Text",ExpressionUUID->"bd58036a-ce77-49b7-bb97-e6c60880795d"],
+Cell[9446, 270, 715, 19, 36, "Input",ExpressionUUID->"f31c28d6-093c-4b89-834c-61fcb7c1d167"],
+Cell[10164, 291, 182, 3, 28, "Text",ExpressionUUID->"232d321c-c2c6-4375-8d89-c312f99d49f0"],
+Cell[10349, 296, 2655, 65, 349, "Input",ExpressionUUID->"76acaecd-4a52-4194-be7c-63683e745eb3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13041, 366, 327, 5, 27, "Subsubsection",ExpressionUUID->"94a57c12-bbde-434e-994f-e799a5c34f0e"],
+Cell[13371, 373, 1212, 25, 146, "Text",ExpressionUUID->"ba937138-4293-487f-86b7-24036ca61859"],
+Cell[CellGroupData[{
+Cell[14608, 402, 2051, 60, 150, "Input",ExpressionUUID->"17909f7c-1f7f-4d31-8fad-9995088901ca"],
+Cell[16662, 464, 2460, 48, 429, "Output",ExpressionUUID->"c60d3cff-6fcd-45ed-916e-fa7ae4f8b62e"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
