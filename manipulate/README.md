@@ -41,7 +41,7 @@ Here, we use a parametrization $\lambda = \lambda_0 e^{2\pi i \frac{t_0}{24}}$, 
 Running the code, we get something that looks like this:
 
 <p align="center">
-  <img src="https://github.com/magurh/MathematicaManipulate/assets/122356566/cd1982e1-72e7-4f9b-a8a9-c4c831ee84c4">
+  <img src="example1.jpg">
 </p>
 
 
@@ -57,6 +57,6 @@ The result of the code is shown below, where we draw lines of constant value.
 Note that the code is written in an interactive environment, which allows one to simply drag the charges to different positions, as well as change their magnitudes.
 
 <p align="center">
-  <img src="https://github.com/magurh/MathematicaManipulate/assets/122356566/5e7279c1-9815-4d4b-b416-10f4eef792dc">
+  <img src="example2.jpg">
 </p>
 
